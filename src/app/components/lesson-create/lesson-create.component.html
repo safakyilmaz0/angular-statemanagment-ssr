@@ -1,0 +1,7 @@
+<div class="container m-2">
+  <input type="number"class="form-control" #txtId placeholder="Id"> <br>
+  <input type="text" class="form-control" #txtLesson placeholder="Lesson"> <br>
+  <input type="text"class="form-control" #txtExplanation placeholder="Explanation"> <br>
+  <button class="btn btn-success" (click)="createLesson(txtId.value, txtLesson.value, txtExplanation.value)">Add Lesson</button>
+
+</div>

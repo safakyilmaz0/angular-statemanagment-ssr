@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/angular-statemanagement-ssr",
+            "outputPath": "dist/angular-statemanagement-ssr/browser",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -94,8 +94,69 @@
             ],
             "scripts": []
           }
+        },
+        "server": {
+          "builder": "@angular-devkit/build-angular:server",
+          "options": {
+            "outputPath": "dist/angular-statemanagement-ssr/server",
+            "main": "server.ts",
+            "tsConfig": "tsconfig.server.json"
+          },
+          "configurations": {
+            "production": {
+              "outputHashing": "media",
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ]
+            },
+            "development": {
+              "optimization": false,
+              "sourceMap": true,
+              "extractLicenses": false
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve-ssr": {
+          "builder": "@nguniversal/builders:ssr-dev-server",
+          "configurations": {
+            "development": {
+              "browserTarget": "angular-statemanagement-ssr:build:development",
+              "serverTarget": "angular-statemanagement-ssr:server:development"
+            },
+            "production": {
+              "browserTarget": "angular-statemanagement-ssr:build:production",
+              "serverTarget": "angular-statemanagement-ssr:server:production"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "prerender": {
+          "builder": "@nguniversal/builders:prerender",
+          "options": {
+            "routes": [
+              "/"
+            ]
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "angular-statemanagement-ssr:build:production",
+              "serverTarget": "angular-statemanagement-ssr:server:production"
+            },
+            "development": {
+              "browserTarget": "angular-statemanagement-ssr:build:development",
+              "serverTarget": "angular-statemanagement-ssr:server:development"
+            }
+          },
+          "defaultConfiguration": "production"
         }
       }
     }
+  },
+  "cli": {
+    "analytics": "0fdcee51-2fad-4818-a760-23a8863c7551"
   }
 }
